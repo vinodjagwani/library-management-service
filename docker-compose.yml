@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+  library-management-service:
+    build:
+      context: .
+      dockerfile: ./src/main/docker/Dockerfile.server
+    ports:
+      - 8089:8089
+      - 9089:9089
+    depends_on:
+      - mongodb_container
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb_container:27017/library-management
+
+volumes:
+  mongodb_data_container:
+    driver: local
