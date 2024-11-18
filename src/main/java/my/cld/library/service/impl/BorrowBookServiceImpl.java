@@ -1,4 +1,4 @@
-package my.cld.library.service;
+package my.cld.library.service.impl;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,7 @@ import my.cld.library.repository.entity.BorrowBook;
 import my.cld.library.rest.dto.BorrowBookCreateRequest;
 import my.cld.library.rest.dto.BorrowBookCreateResponse;
 import my.cld.library.rest.dto.ReturnBookCreateRequest;
+import my.cld.library.service.IBorrowBookService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -20,15 +21,16 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class BorrowBookService {
+public class BorrowBookServiceImpl implements IBorrowBookService {
 
-    BookService bookService;
+    BookServiceImpl bookService;
 
-    BorrowerService borrowerService;
+    BorrowerServiceImpl borrowerService;
 
     BorrowBookRepository borrowBookRepository;
 
     public Mono<BorrowBookCreateResponse> borrowBook(final Mono<BorrowBookCreateRequest> request) {
+        log.debug("Start calling borrowing book with request [{}]", request);
         return request.map(bbr -> bookService.findByBookIdAndiSAvailable(bbr.bookId(), true)
                         .switchIfEmpty(Mono.defer(() -> Mono.error(new BusinessServiceException(ErrorCodeEnum.DATA_NOT_FOUND, "Book not found with [ " + bbr.bookId() + " ]"))))
                         .flatMap(book -> {
@@ -40,6 +42,7 @@ public class BorrowBookService {
     }
 
     public Mono<Void> returnBorrowedBook(final Mono<ReturnBookCreateRequest> request) {
+        log.debug("Start calling return borrowed book with request [{}]", request);
         return request.flatMap(borrowedBookReq -> borrowBookRepository.findByBookIdAndBorrowerId(borrowedBookReq.bookId(), borrowedBookReq.borrowerId())
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new BusinessServiceException(ErrorCodeEnum.DATA_NOT_FOUND, "No booked borrowed"))))
                 .flatMap(borrowBook -> bookService.findByBookIdAndiSAvailable(borrowBook.getBookId(), false).zipWith(Mono.just(borrowBook)))

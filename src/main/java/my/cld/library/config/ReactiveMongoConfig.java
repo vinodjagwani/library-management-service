@@ -46,7 +46,7 @@ public class ReactiveMongoConfig extends AbstractReactiveMongoConfiguration {
 
     @Override
     public MongoClient reactiveMongoClient() {
-        return MongoClients.create();
+        return MongoClients.create(mongoProperties.getUri());
     }
 
     @Bean

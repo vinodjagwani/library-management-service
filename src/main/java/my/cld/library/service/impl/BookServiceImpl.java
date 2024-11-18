@@ -1,4 +1,4 @@
-package my.cld.library.service;
+package my.cld.library.service.impl;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import my.cld.library.repository.entity.Book;
 import my.cld.library.rest.dto.BookCreateRequest;
 import my.cld.library.rest.dto.BookCreateResponse;
 import my.cld.library.rest.dto.BookQueryResponse;
+import my.cld.library.service.IBookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +23,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class BookService {
+public class BookServiceImpl implements IBookService {
 
     BookRepository bookRepository;
 
     public Mono<Book> findByBookIdAndiSAvailable(final String bookId, final boolean isAvailable) {
+        log.debug("Start querying available books with bookId [{}] and bookStatus [{}]", bookId, isAvailable);
         return bookRepository.findByBookIdAndiSAvailable(bookId, isAvailable);
     }
 
@@ -35,12 +37,14 @@ public class BookService {
     }
 
     public Mono<BookCreateResponse> createBook(final Mono<BookCreateRequest> request) {
+        log.debug("Start creating book with request [{}]", request);
         return request.map(req -> bookRepository.save(buildBook(req))).flatMap(this::buildBookCreateResponse);
     }
 
     public Mono<Page<BookQueryResponse>> findAllBooks(final Pageable pageable) {
+        log.debug("Start querying all book with pageable [{}]", pageable);
         return bookRepository.count()
-                .flatMap(bookCount -> this.bookRepository.findAll(pageable.getSort())
+                .flatMap(bookCount -> bookRepository.findAll(pageable.getSort())
                         .buffer(pageable.getPageSize(), (pageable.getPageNumber() + 1))
                         .elementAt(pageable.getPageNumber(), new ArrayList<>())
                         .map(books -> new PageImpl<>(books.stream().map(this::buildBookQueryResponse)

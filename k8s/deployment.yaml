@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: library-management-service
+  labels:
+    app: library-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: library-management-service
+  template:
+    metadata:
+      labels:
+        app: library-management-service
+    spec:
+      containers:
+      - name: library-management-service
+        image: vinodjagwani/library-management-service:latest
+        ports:
+        - containerPort: 8089
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: SPRING_DATASOURCE_URL
+          value: mongodb://root:password@mongodb_container:27017/library-management?authSource=admin
+        volumeMounts:
+        - name: app-logs
+          mountPath: /app/logs
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: app-logs-pvc

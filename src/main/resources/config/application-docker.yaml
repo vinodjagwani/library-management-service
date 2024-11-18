@@ -7,7 +7,7 @@ spring:
     allow-bean-definition-overriding: true
   data:
     mongodb:
-      uri: mongodb://mongodb_container
+      uri: mongodb://root:password@mongodb_container:27017/library-management?authSource=admin
       port: 27017
       database: library-management
 

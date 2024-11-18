@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import my.cld.library.rest.dto.BorrowerCreateRequest;
 import my.cld.library.rest.dto.BorrowerCreateResponse;
-import my.cld.library.service.BorrowerService;
+import my.cld.library.service.IBorrowerService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class BorrowerController {
 
-    BorrowerService borrowerService;
+    IBorrowerService borrowerService;
 
     @PostMapping(value = "/register-borrower", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<BorrowerCreateResponse> registerBorrower(@Valid @RequestBody final Mono<BorrowerCreateRequest> request) {

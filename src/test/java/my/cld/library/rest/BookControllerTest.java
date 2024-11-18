@@ -6,7 +6,7 @@ import lombok.experimental.FieldDefaults;
 import my.cld.library.rest.dto.BookCreateRequest;
 import my.cld.library.rest.dto.BookCreateResponse;
 import my.cld.library.rest.dto.BookQueryResponse;
-import my.cld.library.service.BookService;
+import my.cld.library.service.impl.BookServiceImpl;
 import my.cld.library.utils.MockUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class BookControllerTest {
     WebTestClient webTestClient;
 
     @MockBean
-    BookService bookService;
+    BookServiceImpl bookService;
 
     @Test
     @SneakyThrows

@@ -1,4 +1,4 @@
-package my.cld.library.service;
+package my.cld.library.service.impl;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +8,7 @@ import my.cld.library.repository.BorrowerRepository;
 import my.cld.library.repository.entity.Borrower;
 import my.cld.library.rest.dto.BorrowerCreateRequest;
 import my.cld.library.rest.dto.BorrowerCreateResponse;
+import my.cld.library.service.IBorrowerService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -15,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class BorrowerService {
+public class BorrowerServiceImpl implements IBorrowerService {
 
     BorrowerRepository borrowerRepository;
 
@@ -24,6 +25,7 @@ public class BorrowerService {
     }
 
     public Mono<BorrowerCreateResponse> createBorrower(final Mono<BorrowerCreateRequest> request) {
+        log.debug("Start creating borrower with request [{}]", request);
         return request.map(borrower -> borrowerRepository.save(buildBorrower(borrower)))
                 .flatMap(this::buildBorrowerCreateResponse);
     }

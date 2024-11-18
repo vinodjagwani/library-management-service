@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import my.cld.library.rest.dto.BorrowerCreateRequest;
 import my.cld.library.rest.dto.BorrowerCreateResponse;
-import my.cld.library.service.BorrowerService;
+import my.cld.library.service.impl.BorrowerServiceImpl;
 import my.cld.library.utils.MockUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class BorrowerControllerTest {
     WebTestClient webTestClient;
 
     @MockBean
-    BorrowerService borrowerService;
+    BorrowerServiceImpl borrowerService;
 
     @Test
     @SneakyThrows
@@ -56,6 +56,5 @@ class BorrowerControllerTest {
                 });
         verify(borrowerService, times(1)).createBorrower(any(Mono.class));
     }
-
 
 }

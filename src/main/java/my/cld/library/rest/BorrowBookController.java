@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import my.cld.library.rest.dto.BorrowBookCreateRequest;
 import my.cld.library.rest.dto.BorrowBookCreateResponse;
 import my.cld.library.rest.dto.ReturnBookCreateRequest;
-import my.cld.library.service.BorrowBookService;
+import my.cld.library.service.IBorrowBookService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class BorrowBookController {
 
-    BorrowBookService borrowBookService;
+    IBorrowBookService borrowBookService;
 
     @PostMapping(value = "/borrow-book", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<BorrowBookCreateResponse> borrowBook(@Valid @RequestBody final Mono<BorrowBookCreateRequest> request) {

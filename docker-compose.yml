@@ -13,15 +13,12 @@ services:
   library-management-service:
     build:
       context: .
-      dockerfile: ./src/main/docker/Dockerfile.server
+      dockerfile: Dockerfile.server
     ports:
       - 8089:8089
       - 9089:9089
     depends_on:
       - mongodb_container
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb_container:27017/library-management
 
 volumes:
   mongodb_data_container:

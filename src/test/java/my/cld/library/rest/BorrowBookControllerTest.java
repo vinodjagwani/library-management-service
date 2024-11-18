@@ -6,7 +6,7 @@ import lombok.experimental.FieldDefaults;
 import my.cld.library.rest.dto.BorrowBookCreateRequest;
 import my.cld.library.rest.dto.BorrowBookCreateResponse;
 import my.cld.library.rest.dto.ReturnBookCreateRequest;
-import my.cld.library.service.BorrowBookService;
+import my.cld.library.service.impl.BorrowBookServiceImpl;
 import my.cld.library.utils.MockUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,7 @@ class BorrowBookControllerTest {
     WebTestClient webTestClient;
 
     @MockBean
-    BorrowBookService borrowBookService;
-
+    BorrowBookServiceImpl borrowBookService;
 
     @Test
     @SneakyThrows

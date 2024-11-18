@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import my.cld.library.rest.dto.BookCreateRequest;
 import my.cld.library.rest.dto.BookCreateResponse;
 import my.cld.library.rest.dto.BookQueryResponse;
-import my.cld.library.service.BookService;
+import my.cld.library.service.IBookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class BookController {
 
-    BookService bookService;
+    IBookService bookService;
 
     @GetMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<Page<BookQueryResponse>> getAllBooks(final Pageable pageable) {
