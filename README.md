@@ -42,7 +42,7 @@ Build and push Docker image: Automatically triggered on pushes to the main branc
 
 ## Kubernetes Deployment with MongoDB
 
-Deploy the Library Management System to Kubernetes with MongoDB.
+Deploy the Library Management Service to Kubernetes with MongoDB.
 
 ### Prerequisites
 
