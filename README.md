@@ -76,7 +76,7 @@ Apply the manifests to your Kubernetes cluster:
 ### Accessing the Application
 
 LoadBalancer Service: Once the Service is created, it will provision a LoadBalancer. You can get the external IP using:
-    kubectl get svc library-management-system
+    kubectl get svc library-management-service
 
 Ingress: If you have set up an Ingress controller, you can access the application using the host defined in the `ingress.yaml` file. Ensure you have configured the DNS or `/etc/hosts` file to resolve the hostname.
 
