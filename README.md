@@ -18,6 +18,9 @@ or
 3. Access swagger api using bellow url:
 http://localhost:8089/library-management-service/webjars/swagger-ui/index.html
 
+## Actuator Endpoint
+http://localhost:9089/actuator/health
+
 ## Sample Request for each APIs:
 
 ### CreateBook API

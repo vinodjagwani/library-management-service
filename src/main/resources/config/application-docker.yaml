@@ -5,9 +5,6 @@ spring:
     basePath: /library-management-service
   main:
     allow-bean-definition-overriding: true
-  cloud:
-    discovery:
-      enabled: false
   data:
     mongodb:
       uri: mongodb://mongodb_container
