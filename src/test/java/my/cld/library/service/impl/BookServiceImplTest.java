@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import my.cld.library.repository.BookRepository;
 import my.cld.library.repository.entity.Book;
-import my.cld.library.rest.dto.BookCreateRequest;
+import my.cld.library.rest.v1.dto.BookCreateRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

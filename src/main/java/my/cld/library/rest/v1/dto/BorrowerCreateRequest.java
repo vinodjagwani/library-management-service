@@ -1,4 +1,4 @@
-package my.cld.library.rest.dto;
+package my.cld.library.rest.v1.dto;
 
 
 import jakarta.validation.constraints.Email;

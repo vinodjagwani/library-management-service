@@ -1,13 +1,13 @@
-package my.cld.library.rest;
+package my.cld.library.rest.v1;
 
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import my.cld.library.rest.dto.BookCreateRequest;
-import my.cld.library.rest.dto.BookCreateResponse;
-import my.cld.library.rest.dto.BookQueryResponse;
+import my.cld.library.rest.v1.dto.BookCreateRequest;
+import my.cld.library.rest.v1.dto.BookCreateResponse;
+import my.cld.library.rest.v1.dto.BookQueryResponse;
 import my.cld.library.service.IBookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class BookController {

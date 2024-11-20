@@ -108,7 +108,7 @@ kubectl delete -f k8s/ingress.yaml
 ## Sample Request for each APIs:
 
 ### CreateBook API
-curl --location --request POST 'http://localhost:8089/library-management-service/api/create-book' \
+curl --location --request POST 'http://localhost:8089/library-management-service/api/v1/create-book' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "isbn": "ISB-123567",
@@ -117,7 +117,7 @@ curl --location --request POST 'http://localhost:8089/library-management-service
 }'
 
 ### RegisterBook API
-curl --location --request POST 'http://localhost:8089/library-management-service/api/register-borrower' \
+curl --location --request POST 'http://localhost:8089/library-management-service/api/v1/register-borrower' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "name": "test2",
@@ -125,11 +125,11 @@ curl --location --request POST 'http://localhost:8089/library-management-service
 }'
 
 ### GetAllBook API
-curl --location --request GET 'http://localhost:8089/library-management-service/api/books?page=0&size=3'
+curl --location --request GET 'http://localhost:8089/library-management-service/api/v1/books?page=0&size=3'
 
 
 ### BorrowBook API
-curl --location --request POST 'http://localhost:8089/library-management-service/api/borrow-book' \
+curl --location --request POST 'http://localhost:8089/library-management-service/api/v1/borrow-book' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "bookId": "673a13e7ece39e323ee9617c",
@@ -137,7 +137,7 @@ curl --location --request POST 'http://localhost:8089/library-management-service
 }'
 
 ### ReturnBook API
-curl --location --request POST 'http://localhost:8089/library-management-service/api/return-book' \
+curl --location --request POST 'http://localhost:8089/library-management-service/api/v1/return-book' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "bookId" : "673a13e7ece39e323ee9617c",

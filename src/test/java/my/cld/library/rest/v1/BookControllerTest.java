@@ -1,11 +1,11 @@
-package my.cld.library.rest;
+package my.cld.library.rest.v1;
 
 import lombok.AccessLevel;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
-import my.cld.library.rest.dto.BookCreateRequest;
-import my.cld.library.rest.dto.BookCreateResponse;
-import my.cld.library.rest.dto.BookQueryResponse;
+import my.cld.library.rest.v1.dto.BookCreateRequest;
+import my.cld.library.rest.v1.dto.BookCreateResponse;
+import my.cld.library.rest.v1.dto.BookQueryResponse;
 import my.cld.library.service.impl.BookServiceImpl;
 import my.cld.library.utils.MockUtils;
 import org.assertj.core.util.Lists;
@@ -43,7 +43,7 @@ class BookControllerTest {
         final BookQueryResponse response = Optional.ofNullable(MockUtils.getResource("mock/book-query-response.json", BookQueryResponse.class)).orElse(new BookQueryResponse("", "", "", "", true));
         when(bookService.findAllBooks(PageRequest.of(0, 10))).thenReturn(Mono.just(new PageImpl<>(Lists.list(response))));
         webTestClient.get()
-                .uri("/api/books")
+                .uri("/api/v1/books")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -58,7 +58,7 @@ class BookControllerTest {
     void testCreateBook() {
         final BookCreateRequest request = Optional.ofNullable(MockUtils.getResource("mock/book-create-request.json", BookCreateRequest.class)).orElse(new BookCreateRequest("", "", ""));
         when(bookService.createBook(any(Mono.class))).thenReturn(Mono.just(new BookCreateResponse("", "", "", "")));
-        webTestClient.post().uri("/api/create-book")
+        webTestClient.post().uri("/api/v1/create-book")
                 .body(BodyInserters.fromValue(request))
                 .exchange()
                 .expectStatus().isOk()

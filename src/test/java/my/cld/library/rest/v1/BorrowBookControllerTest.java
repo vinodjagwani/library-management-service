@@ -1,11 +1,11 @@
-package my.cld.library.rest;
+package my.cld.library.rest.v1;
 
 import lombok.AccessLevel;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
-import my.cld.library.rest.dto.BorrowBookCreateRequest;
-import my.cld.library.rest.dto.BorrowBookCreateResponse;
-import my.cld.library.rest.dto.ReturnBookCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowBookCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowBookCreateResponse;
+import my.cld.library.rest.v1.dto.ReturnBookCreateRequest;
 import my.cld.library.service.impl.BorrowBookServiceImpl;
 import my.cld.library.utils.MockUtils;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ class BorrowBookControllerTest {
         final BorrowBookCreateResponse response = Optional.ofNullable(MockUtils.getResource("mock/borrow-book-create-response.json", BorrowBookCreateResponse.class))
                 .orElse(new BorrowBookCreateResponse("", "", ""));
         when(borrowBookService.borrowBook(any(Mono.class))).thenReturn(Mono.just(response));
-        webTestClient.post().uri("/api/borrow-book")
+        webTestClient.post().uri("/api/v1/borrow-book")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(request))
                 .exchange()
@@ -64,7 +64,7 @@ class BorrowBookControllerTest {
         final ReturnBookCreateRequest request = Optional.ofNullable(MockUtils.getResource("mock/borrow-book-create-request.json", ReturnBookCreateRequest.class))
                 .orElse(new ReturnBookCreateRequest("", ""));
         when(borrowBookService.returnBorrowedBook(any(Mono.class))).thenReturn(Mono.empty().then());
-        webTestClient.post().uri("/api/return-book")
+        webTestClient.post().uri("/api/v1/return-book")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(request))
                 .exchange()

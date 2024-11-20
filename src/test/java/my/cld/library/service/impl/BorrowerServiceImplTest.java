@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import my.cld.library.repository.BorrowerRepository;
 import my.cld.library.repository.entity.Borrower;
-import my.cld.library.rest.dto.BorrowerCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowerCreateRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

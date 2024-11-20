@@ -1,12 +1,12 @@
-package my.cld.library.rest;
+package my.cld.library.rest.v1;
 
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import my.cld.library.rest.dto.BorrowerCreateRequest;
-import my.cld.library.rest.dto.BorrowerCreateResponse;
+import my.cld.library.rest.v1.dto.BorrowerCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowerCreateResponse;
 import my.cld.library.service.IBorrowerService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class BorrowerController {

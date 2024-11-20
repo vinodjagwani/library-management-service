@@ -1,10 +1,10 @@
-package my.cld.library.rest;
+package my.cld.library.rest.v1;
 
 import lombok.AccessLevel;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
-import my.cld.library.rest.dto.BorrowerCreateRequest;
-import my.cld.library.rest.dto.BorrowerCreateResponse;
+import my.cld.library.rest.v1.dto.BorrowerCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowerCreateResponse;
 import my.cld.library.service.impl.BorrowerServiceImpl;
 import my.cld.library.utils.MockUtils;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class BorrowerControllerTest {
         final BorrowerCreateResponse response = Optional.ofNullable(MockUtils.getResource("mock/borrower-create-response.json", BorrowerCreateResponse.class))
                 .orElse(new BorrowerCreateResponse("", "", ""));
         when(borrowerService.createBorrower(any(Mono.class))).thenReturn(Mono.just(response));
-        webTestClient.post().uri("/api/register-borrower")
+        webTestClient.post().uri("/api/v1/register-borrower")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(request))
                 .exchange()

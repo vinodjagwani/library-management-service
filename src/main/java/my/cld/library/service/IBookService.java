@@ -1,9 +1,9 @@
 package my.cld.library.service;
 
 import my.cld.library.repository.entity.Book;
-import my.cld.library.rest.dto.BookCreateRequest;
-import my.cld.library.rest.dto.BookCreateResponse;
-import my.cld.library.rest.dto.BookQueryResponse;
+import my.cld.library.rest.v1.dto.BookCreateRequest;
+import my.cld.library.rest.v1.dto.BookCreateResponse;
+import my.cld.library.rest.v1.dto.BookQueryResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Mono;

@@ -1,8 +1,8 @@
 package my.cld.library.service;
 
-import my.cld.library.rest.dto.BorrowBookCreateRequest;
-import my.cld.library.rest.dto.BorrowBookCreateResponse;
-import my.cld.library.rest.dto.ReturnBookCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowBookCreateRequest;
+import my.cld.library.rest.v1.dto.BorrowBookCreateResponse;
+import my.cld.library.rest.v1.dto.ReturnBookCreateRequest;
 import reactor.core.publisher.Mono;
 
 public interface IBorrowBookService {
