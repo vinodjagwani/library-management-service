@@ -1,5 +1,6 @@
 package my.cld.library.service.impl;
 
+import com.querydsl.core.types.Predicate;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import my.cld.library.repository.BorrowBookRepository;
@@ -16,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,12 +37,12 @@ public class BorrowBookServiceImplTest {
 
     @Test
     void testBorrowBook() {
-        when(bookService.findByBookIdAndiSAvailable(any(String.class), anyBoolean())).thenReturn(Mono.just(new Book()));
+        when(bookService.findOne(any(Predicate.class))).thenReturn(Mono.just(new Book()));
         when(bookService.save(any(Book.class))).thenReturn(Mono.just(new Book()));
         when(borrowerService.findBorrowerById(any(String.class))).thenReturn(Mono.just(new Borrower()));
         when(borrowBookRepository.save(any(BorrowBook.class))).thenReturn(Mono.just(new BorrowBook()));
         borrowBookService.borrowBook(Mono.just(new BorrowBookCreateRequest("134", "14"))).block();
-        verify(bookService, atLeastOnce()).findByBookIdAndiSAvailable(any(String.class), anyBoolean());
+        verify(bookService, atLeastOnce()).findOne(any(Predicate.class));
         verify(bookService, atLeastOnce()).save(any(Book.class));
         verify(borrowerService, atLeastOnce()).findBorrowerById((any(String.class)));
         verify(borrowBookRepository, atLeastOnce()).save(any(BorrowBook.class));
@@ -52,15 +52,14 @@ public class BorrowBookServiceImplTest {
     void testReturnBorrowedBook() {
         final BorrowBook borrowBook = new BorrowBook();
         borrowBook.setBookId("234");
-        when(borrowBookRepository.findByBookIdAndBorrowerId(any(String.class), any(String.class))).thenReturn(Mono.just(borrowBook));
-        when(bookService.findByBookIdAndiSAvailable(any(String.class), eq(false))).thenReturn(Mono.just(new Book()));
+        when(borrowBookRepository.findOne(any(Predicate.class))).thenReturn(Mono.just(borrowBook));
+        when(bookService.findOne(any(Predicate.class))).thenReturn(Mono.just(new Book()));
         when(bookService.save(any(Book.class))).thenReturn(Mono.just(new Book()));
         when(borrowBookRepository.delete(any(BorrowBook.class))).thenReturn(Mono.empty().then());
         borrowBookService.returnBorrowedBook(Mono.just(new ReturnBookCreateRequest("", ""))).block();
-        verify(borrowBookRepository, atLeastOnce()).findByBookIdAndBorrowerId(any(String.class), any(String.class));
-        verify(bookService, atLeastOnce()).findByBookIdAndiSAvailable(any(String.class), eq(false));
+        verify(borrowBookRepository, atLeastOnce()).findOne(any(Predicate.class));
+        verify(bookService, atLeastOnce()).findOne(any(Predicate.class));
         verify(bookService, atLeastOnce()).save(any(Book.class));
         verify(borrowBookRepository, atLeastOnce()).delete(any(BorrowBook.class));
     }
-
 }

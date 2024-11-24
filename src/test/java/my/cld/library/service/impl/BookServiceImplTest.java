@@ -1,9 +1,11 @@
 package my.cld.library.service.impl;
 
+import com.querydsl.core.types.Predicate;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import my.cld.library.repository.BookRepository;
 import my.cld.library.repository.entity.Book;
+import my.cld.library.repository.entity.QBook;
 import my.cld.library.rest.v1.dto.BookCreateRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,9 +31,9 @@ class BookServiceImplTest {
 
     @Test
     void testFindByBookIdAndiSAvailable() {
-        when(bookRepository.findByBookIdAndiSAvailable(any(String.class), anyBoolean())).thenReturn(Mono.just(new Book()));
-        bookService.findByBookIdAndiSAvailable("1234", true);
-        verify(bookRepository, atLeastOnce()).findByBookIdAndiSAvailable(any(String.class), anyBoolean());
+        when(bookRepository.findOne(any(Predicate.class))).thenReturn(Mono.just(new Book()));
+        bookService.findOne(QBook.book.id.eq("1234").and(QBook.book.available.eq(true)));
+        verify(bookRepository, atLeastOnce()).findOne(any(Predicate.class));
     }
 
     @Test

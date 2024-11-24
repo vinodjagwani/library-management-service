@@ -1,5 +1,6 @@
 package my.cld.library.service.impl;
 
+import com.querydsl.core.types.Predicate;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,9 +28,9 @@ public class BookServiceImpl implements IBookService {
 
     BookRepository bookRepository;
 
-    public Mono<Book> findByBookIdAndiSAvailable(final String bookId, final boolean isAvailable) {
-        log.debug("Start querying available books with bookId [{}] and bookStatus [{}]", bookId, isAvailable);
-        return bookRepository.findByBookIdAndiSAvailable(bookId, isAvailable);
+    public Mono<Book> findOne(final Predicate predicate) {
+        log.debug("Start querying available books with predicate [{}]", predicate);
+        return bookRepository.findOne(predicate);
     }
 
     public Mono<Book> save(final Book book) {

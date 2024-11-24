@@ -8,6 +8,8 @@ import my.cld.library.exception.BusinessServiceException;
 import my.cld.library.exception.dto.ErrorCodeEnum;
 import my.cld.library.repository.BorrowBookRepository;
 import my.cld.library.repository.entity.BorrowBook;
+import my.cld.library.repository.entity.QBook;
+import my.cld.library.repository.entity.QBorrowBook;
 import my.cld.library.rest.v1.dto.BorrowBookCreateRequest;
 import my.cld.library.rest.v1.dto.BorrowBookCreateResponse;
 import my.cld.library.rest.v1.dto.ReturnBookCreateRequest;
@@ -31,7 +33,7 @@ public class BorrowBookServiceImpl implements IBorrowBookService {
 
     public Mono<BorrowBookCreateResponse> borrowBook(final Mono<BorrowBookCreateRequest> request) {
         log.debug("Start calling borrowing book with request [{}]", request);
-        return request.map(bbr -> bookService.findByBookIdAndiSAvailable(bbr.bookId(), true)
+        return request.map(bbr -> bookService.findOne(QBook.book.id.eq(bbr.bookId()).and(QBook.book.available.eq(true)))
                         .switchIfEmpty(Mono.defer(() -> Mono.error(new BusinessServiceException(ErrorCodeEnum.DATA_NOT_FOUND, "Book not found with [ " + bbr.bookId() + " ]"))))
                         .flatMap(book -> {
                             book.setAvailable(false);
@@ -43,9 +45,10 @@ public class BorrowBookServiceImpl implements IBorrowBookService {
 
     public Mono<Void> returnBorrowedBook(final Mono<ReturnBookCreateRequest> request) {
         log.debug("Start calling return borrowed book with request [{}]", request);
-        return request.flatMap(borrowedBookReq -> borrowBookRepository.findByBookIdAndBorrowerId(borrowedBookReq.bookId(), borrowedBookReq.borrowerId())
+        return request.flatMap(borrowedBookReq -> borrowBookRepository.findOne(QBorrowBook.borrowBook.bookId.eq(borrowedBookReq.bookId()).and(QBorrowBook.borrowBook.borrowerId.eq(borrowedBookReq.borrowerId())))
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new BusinessServiceException(ErrorCodeEnum.DATA_NOT_FOUND, "No booked borrowed"))))
-                .flatMap(borrowBook -> bookService.findByBookIdAndiSAvailable(borrowBook.getBookId(), false).zipWith(Mono.just(borrowBook)))
+                .flatMap(borrowBook -> bookService.findOne(QBook.book.id.eq(borrowBook.getBookId()).and(QBook.book.available.eq(false)))
+                        .zipWith(Mono.just(borrowBook)))
                 .flatMap(book -> {
                     book.getT1().setAvailable(true);
                     return bookService.save(book.getT1()).zipWith(Mono.just(book.getT2()));

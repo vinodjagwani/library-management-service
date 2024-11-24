@@ -1,5 +1,6 @@
 package my.cld.library.service;
 
+import com.querydsl.core.types.Predicate;
 import my.cld.library.repository.entity.Book;
 import my.cld.library.rest.v1.dto.BookCreateRequest;
 import my.cld.library.rest.v1.dto.BookCreateResponse;
@@ -12,9 +13,10 @@ public interface IBookService {
 
     Mono<Book> save(final Book book);
 
+    Mono<Book> findOne(final Predicate predicate);
+
     Mono<Page<BookQueryResponse>> findAllBooks(final Pageable pageable);
 
     Mono<BookCreateResponse> createBook(final Mono<BookCreateRequest> request);
 
-    Mono<Book> findByBookIdAndiSAvailable(final String bookId, final boolean isAvailable);
 }

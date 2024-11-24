@@ -21,6 +21,7 @@ public class BorrowerServiceImpl implements IBorrowerService {
     BorrowerRepository borrowerRepository;
 
     public Mono<Borrower> findBorrowerById(final String borrowerId) {
+        log.debug("Start querying borrower by borrowerId [{}]", borrowerId);
         return borrowerRepository.findById(borrowerId);
     }
 
