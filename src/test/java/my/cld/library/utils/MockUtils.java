@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -15,10 +14,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-@UtilityClass
-public class MockUtils {
+public final class MockUtils {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private MockUtils(){
+
+    }
 
     @SuppressWarnings("unchecked")
     public static <T> T getResource(final String resource, final Class<T> clazz) {
