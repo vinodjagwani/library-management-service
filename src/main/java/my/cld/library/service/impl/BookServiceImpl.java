@@ -34,6 +34,7 @@ public class BookServiceImpl implements IBookService {
     }
 
     public Mono<Book> save(final Book book) {
+        log.debug("Start saving book with bookIsbn [{}]", book.getIsbn());
         return bookRepository.save(book);
     }
 
